@@ -1,0 +1,54 @@
+import java.util.*;
+
+/**
+ * LeetCode #424: Longest Repeating Character Replacement
+ * Category: Sliding Window
+ */
+public class CharacterReplacement {
+
+    // --- THE LEETCODE FUNCTION ---
+    public int characterReplacement(String s, int k) {
+        // Frequency map for 26 uppercase English letters
+        int[] count = new int[26];
+        int left = 0;
+        int maxCount = 0; // Tracks the frequency of the most common character in current window
+        int result = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+            // Convert char to index 0-25
+            int index = s.charAt(right) - 'A';
+            count[index]++;
+
+            // Update maxCount: the most frequent char in the current window
+            maxCount = Math.max(maxCount, count[index]);
+
+            // Window Condition: (Window Length - Max Frequency) = number of chars to replace
+            // If chars to replace > k, the window is invalid.
+            while ((right - left + 1) - maxCount > k) {
+                count[s.charAt(left) - 'A']--;
+                left++;
+            }
+
+            // Update result with the maximum valid window size found
+            result = Math.max(result, right - left + 1);
+        }
+        return result;
+    }
+
+    // --- THE DRIVER (Wrapper) ---
+    public static void main(String[] args) {
+        CharacterReplacement solver = new CharacterReplacement();
+
+        // Test Case 1: Replace 2 'A's or 2 'B's
+        String s1 = "ABAB";
+        int k1 = 2;
+        // Expected Output: 4
+        System.out.println("Test 1 Result: " + solver.characterReplacement(s1, k1));
+
+        // Test Case 2: Replace 'A's to get "BBBB"
+        String s2 = "AABABBA";
+        int k2 = 1;
+        // Expected Output: 4
+        System.out.println("Test 2 Result: " + solver.characterReplacement(s2, k2));
+    }
+}
