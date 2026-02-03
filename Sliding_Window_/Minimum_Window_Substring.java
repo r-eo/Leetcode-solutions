@@ -1,5 +1,3 @@
-import java.util.*;
-
 /**
  * LeetCode #76: Minimum Window Substring
  * Strategy: Sliding Window with a character frequency array (ASCII 128)
