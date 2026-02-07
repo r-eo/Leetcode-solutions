@@ -1,5 +1,3 @@
-import java.util.*;
-
 /**
  * LeetCode #2401: Longest Nice Subarray
  * Strategy: Sliding Window with Bitwise OR/XOR
